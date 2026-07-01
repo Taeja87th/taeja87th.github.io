@@ -7,44 +7,47 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Pretendard', sans-serif; background-color: #f0f2f5; height: 100vh; overflow: hidden; }
 
-        /* 1. 그리드 레이아웃 (4:6 비율) */
+        /* 1. 그리드 레이아웃 (3:7 비율) */
         .container {
             display: grid;
-            grid-template-columns: 4fr 6fr;
+            grid-template-columns: 3fr 7fr;
             height: 100vh;
         }
 
         /* 2. 왼쪽 메뉴 영역 */
-        .left-side { padding: 50px; background: #ffffff; border-right: 1px solid #e0e0e0; overflow-y: auto; }
-        .title { font-size: 24pt; font-weight: 800; margin-bottom: 40px; color: #1a1a1a; }
+        .left-side { padding: 40px; background: #ffffff; border-right: 1px solid #ddd; overflow-y: auto; }
+        .title { font-size: 20pt; font-weight: 800; margin-bottom: 30px; color: #1a1a1a; }
         .ui-item {
-            padding: 20px; border-radius: 12px; margin-bottom: 15px;
-            background: #f8f9fa; cursor: pointer; transition: 0.3s;
-            border: 2px solid transparent;
+            padding: 15px; border-radius: 10px; margin-bottom: 12px;
+            background: #f8f9fa; cursor: pointer; transition: 0.2s;
+            border: 1px solid #eee;
         }
-        .ui-item:hover, .ui-item.active { background: #fff1f5; border: 2px solid #ff3c78; }
+        .ui-item:hover, .ui-item.active { background: #fff1f5; border: 1px solid #ff3c78; }
 
-        /* 3. 오른쪽 태블릿 영역 */
+        /* 3. 오른쪽 태블릿 영역 (공간 꽉 채우기) */
         .right-side { 
             display: flex; align-items: center; justify-content: center;
+            padding: 40px;
             background-color: #e9ecef;
         }
         
-        /* 가로형 태블릿 프레임 */
+        /* 태블릿 프레임 (aspect-ratio로 비율 고정) */
         .tablet-frame {
-            width: 700px; height: 450px; /* 가로가 긴 비율 */
+            width: 100%;
+            max-width: 900px; /* 너무 커지지 않게 제한 */
+            aspect-ratio: 16 / 10; /* 태블릿 가로 비율 유지 */
             border: 15px solid #2d2d2d;
             border-radius: 30px;
             background: #fff;
             position: relative;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
             overflow: hidden;
         }
         .screen { width: 100%; height: 100%; border: none; }
         
         .empty-msg {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            color: #999; font-size: 14pt;
+            color: #999; font-size: 1.2rem;
         }
     </style>
 </head>
@@ -55,12 +58,12 @@
         <div class="title">UI Showcase</div>
         <div class="ui-list">
             <div class="ui-item" onclick="loadUI(this, 'https://example.com/demo1')">
-                <h3>펫프렌즈 홈 피드</h3>
-                <p>Jetpack Compose 스크롤 구현</p>
+                <h3>📱 펫프렌즈 홈 피드</h3>
+                <p>Jetpack Compose 스크롤</p>
             </div>
             <div class="ui-item" onclick="loadUI(this, 'https://example.com/demo2')">
-                <h3>토스 송금 화면</h3>
-                <p>커스텀 키패드 및 애니메이션</p>
+                <h3>💳 토스 송금 화면</h3>
+                <p>커스텀 키패드 애니메이션</p>
             </div>
         </div>
     </div>
@@ -68,7 +71,7 @@
     <div class="right-side">
         <div class="tablet-frame">
             <iframe id="frame" class="screen" src="about:blank"></iframe>
-            <div id="msg" class="empty-msg">프로젝트를 선택하세요</div>
+            <div id="msg" class="empty-msg">목록에서 UI를 선택하세요</div>
         </div>
     </div>
 </div>
