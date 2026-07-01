@@ -2,114 +2,84 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>taeja87th | Android UI Showcase</title>
+    <title>taeja87th | Tablet Showcase</title>
     <style>
-        /* 1. 기본 초기화 및 레이아웃 설정 */
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Malgun Gothic', sans-serif; display: block; background-color: #f7f8fa; height: 100vh; overflow: hidden; }
-        
-        /* 테이블 구조를 이용해 왼쪽(소개/목록)과 오른쪽(폰 화면)을 분할 */
-        .wrapper-table { display: table; width: 100%; height: 100vh; table-layout: fixed; }
-        .column { display: table-cell; vertical-align: middle; }
+        body { font-family: 'Pretendard', sans-serif; background-color: #f0f2f5; height: 100vh; overflow: hidden; }
 
-        /* 2. 왼쪽 영역 스타일 (소개 및 UI 리스트) */
-        .left-area { width: 55%; padding: 60px; background-color: #fff1f5; position: relative; } /* 펫프렌즈 느낌의 연분홍 배경색 */
-        .brand-logo { color: #ff3c78; font-weight: bold; font-size: 24pt; margin-bottom: 40px; }
-        .main-title { font-size: 32pt; font-weight: 800; line-height: 1.4; color: #222; margin-bottom: 30px; }
-        .main-title span { color: #ff3c78; }
-        
-        /* UI 카드 리스트 스타일 */
-        .ui-list { margin-top: 20px; max-height: 400px; overflow-y: auto; padding-right: 10px; }
-        .ui-item { 
-            background: white; padding: 20px; border-radius: 15px; margin-bottom: 15px; 
-            cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: all 0.2s ease;
-            border-left: 5px solid #ccc;
+        /* 1. 그리드 레이아웃 (4:6 비율) */
+        .container {
+            display: grid;
+            grid-template-columns: 4fr 6fr;
+            height: 100vh;
         }
-        .ui-item:hover, .ui-item.active { 
-            transform: translateY(-3px); box-shadow: 0 6px 15px rgba(255, 60, 120, 0.15); 
-            border-left: 5px solid #ff3c78;
-        }
-        .ui-item h3 { font-size: 14pt; color: #333; margin-bottom: 5px; }
-        .ui-item p { font-size: 10pt; color: #777; }
 
-        /* 3. 오른쪽 영역 스타일 (스마트폰 시연 창) */
-        .right-area { width: 45%; background-color: #ffffff; text-align: center; }
-        
-        /* 캡처 화면처럼 예쁜 스마트폰 프레임 만들기 */
-        .phone-mockup {
-            display: inline-block; width: 375px; height: 760px;
-            border: 12px solid #222; border-radius: 40px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            overflow: hidden; background: #fff; position: relative;
+        /* 2. 왼쪽 메뉴 영역 */
+        .left-side { padding: 50px; background: #ffffff; border-right: 1px solid #e0e0e0; overflow-y: auto; }
+        .title { font-size: 24pt; font-weight: 800; margin-bottom: 40px; color: #1a1a1a; }
+        .ui-item {
+            padding: 20px; border-radius: 12px; margin-bottom: 15px;
+            background: #f8f9fa; cursor: pointer; transition: 0.3s;
+            border: 2px solid transparent;
         }
-        /* 스마트폰 상단 카메라 노치 바 형태 */
-        .phone-mockup::before {
-            content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-            width: 150px; height: 25px; background: #222; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;
-            z-index: 10;
+        .ui-item:hover, .ui-item.active { background: #fff1f5; border: 2px solid #ff3c78; }
+
+        /* 3. 오른쪽 태블릿 영역 */
+        .right-side { 
+            display: flex; align-items: center; justify-content: center;
+            background-color: #e9ecef;
         }
-        .phone-screen { width: 100%; height: 100%; border: none; }
         
-        /* 초기 아무것도 선택 안했을 때 나오는 안내 문구 */
-        .empty-notice {
+        /* 가로형 태블릿 프레임 */
+        .tablet-frame {
+            width: 700px; height: 450px; /* 가로가 긴 비율 */
+            border: 15px solid #2d2d2d;
+            border-radius: 30px;
+            background: #fff;
+            position: relative;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        .screen { width: 100%; height: 100%; border: none; }
+        
+        .empty-msg {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            color: #aaa; font-size: 12pt; text-align: center; width: 80%;
+            color: #999; font-size: 14pt;
         }
     </style>
 </head>
 <body>
 
-<div class="wrapper-table">
-    
-    <div class="column left-area">
-        <div class="brand-logo">♥ taeja_showcase</div>
-        
-        <div class="main-title">
-            안드로이드 스튜디오로 개발한<br>
-            <span>다양한 UI</span>를 직접 만져보세요
-        </div>
-        
+<div class="container">
+    <div class="left-side">
+        <div class="title">UI Showcase</div>
         <div class="ui-list">
-            <div class="ui-item active" onclick="loadUI(this, 'https://example.com/demo1')">
-                <h3>📱 1. 펫프렌즈 스타일 홈 피드 UI</h3>
-                <p>Jetpack Compose를 이용한 스크롤 및 카테고리 탭 구현</p>
+            <div class="ui-item" onclick="loadUI(this, 'https://example.com/demo1')">
+                <h3>펫프렌즈 홈 피드</h3>
+                <p>Jetpack Compose 스크롤 구현</p>
             </div>
             <div class="ui-item" onclick="loadUI(this, 'https://example.com/demo2')">
-                <h3>💳 2. 토스 스타일 송금 화면</h3>
-                <p>다이내믹한 텍스트 애니메이션 및 커스텀 키패드 UI</p>
+                <h3>토스 송금 화면</h3>
+                <p>커스텀 키패드 및 애니메이션</p>
             </div>
-            <div class="ui-item" onclick="loadUI(this, 'https://example.com/demo3')">
-                <h3>💬 3. 당근마켓 채팅 레이아웃</h3>
-                <p>ConstraintLayout을 활용한 깔끔한 대화창 UI</p>
-            </div>
-        </div>
-    </div>
-    
-    <div class="column right-area">
-        <div class="phone-mockup">
-            <iframe id="phoneFrame" class="phone-screen" src="about:blank"></iframe>
-            <div id="notice" class="empty-notice">← 왼쪽 리스트에서<br>확인할 UI를 선택해 주세요!</div>
         </div>
     </div>
 
+    <div class="right-side">
+        <div class="tablet-frame">
+            <iframe id="frame" class="screen" src="about:blank"></iframe>
+            <div id="msg" class="empty-msg">프로젝트를 선택하세요</div>
+        </div>
+    </div>
 </div>
 
 <script>
-    function loadUI(element, url) {
-        // 1. 모든 리스트 아이템에서 active 클래스 제거 후 클릭한 것에만 추가
-        const items = document.querySelectorAll('.ui-item');
-        items.forEach(item => item.classList.remove('active'));
-        element.classList.add('active');
-        
-        // 2. 안내 문구 숨기기
-        document.getElementById('notice').style.display = 'none';
-        
-        // 3. 스마트폰 프레임(iframe)에 안드로이드 웹 빌드 결과물 주소 매핑
-        // (지금은 임시 url이지만, 나중에 내 프로젝트 경로인 './uis/project1/index.html' 등으로 바꿉니다)
-        document.getElementById('phoneFrame').src = url;
+    function loadUI(el, url) {
+        document.querySelectorAll('.ui-item').forEach(i => i.classList.remove('active'));
+        el.classList.add('active');
+        document.getElementById('msg').style.display = 'none';
+        document.getElementById('frame').src = url;
     }
 </script>
-
 </body>
 </html>
