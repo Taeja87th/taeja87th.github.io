@@ -7,15 +7,27 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Pretendard', sans-serif; background-color: #f0f2f5; height: 100vh; overflow: hidden; }
 
-        /* 1. 그리드 레이아웃 (2:8 비율) */
+        /* 1. 그리드 레이아웃 (애니메이션 적용) */
         .container {
             display: grid;
-            grid-template-columns: 2fr 8fr;
+            grid-template-columns: 300px 1fr; /* 펼쳤을 때 */
             height: 100vh;
+            transition: grid-template-columns 0.3s ease;
+        }
+        .container.collapsed {
+            grid-template-columns: 0px 1fr; /* 접었을 때 */
         }
 
         /* 2. 왼쪽 메뉴 영역 */
-        .left-side { padding: 40px; background: #ffffff; border-right: 1px solid #ddd; overflow-y: auto; }
+        .left-side { 
+            padding: 40px; background: #ffffff; border-right: 1px solid #ddd; 
+            overflow: hidden; position: relative; white-space: nowrap;
+        }
+        .btn-toggle {
+            position: absolute; top: 20px; right: 20px;
+            cursor: pointer; padding: 5px 10px; background: #ff3c78; color: white; border-radius: 5px;
+        }
+        
         .title { font-size: 20pt; font-weight: 800; margin-bottom: 30px; color: #1a1a1a; }
         .ui-item {
             padding: 15px; border-radius: 10px; margin-bottom: 12px;
@@ -24,18 +36,13 @@
         }
         .ui-item:hover, .ui-item.active { background: #fff1f5; border: 1px solid #ff3c78; }
 
-        /* 3. 오른쪽 태블릿 영역 (공간 꽉 채우기) */
+        /* 3. 오른쪽 태블릿 영역 */
         .right-side { 
             display: flex; align-items: center; justify-content: center;
-            padding: 40px;
-            background-color: #e9ecef;
+            padding: 40px; background-color: #e9ecef;
         }
-        
-        /* 태블릿 프레임 (aspect-ratio로 비율 고정) */
         .tablet-frame {
-            width: 100%;
-            height: 100%;
-            /*aspect-ratio: 16 / 10;  태블릿 가로 비율 유지 */
+            width: 100%; height: 100%;
             border: 15px solid #2d2d2d;
             border-radius: 30px;
             background: #fff;
@@ -53,17 +60,16 @@
 </head>
 <body>
 
-<div class="container">
+<div class="container" id="container">
     <div class="left-side">
+        <div class="btn-toggle" onclick="toggleMenu()">☰</div>
         <div class="title">UI Showcase</div>
         <div class="ui-list">
             <div class="ui-item" onclick="loadUI(this, 'https://example.com/demo1')">
                 <h3>📱 펫프렌즈 홈 피드</h3>
-                <p>Jetpack Compose 스크롤</p>
             </div>
             <div class="ui-item" onclick="loadUI(this, 'https://example.com/demo2')">
                 <h3>💳 토스 송금 화면</h3>
-                <p>커스텀 키패드 애니메이션</p>
             </div>
         </div>
     </div>
@@ -77,6 +83,10 @@
 </div>
 
 <script>
+    function toggleMenu() {
+        document.getElementById('container').classList.toggle('collapsed');
+    }
+
     function loadUI(el, url) {
         document.querySelectorAll('.ui-item').forEach(i => i.classList.remove('active'));
         el.classList.add('active');
